@@ -7,9 +7,9 @@
 class User
 {
 private:
-    int userNumber;                                                         // номер пользователя
-    SOCKET userSocket;                                                      // сокет пользователя
-    std::vector<Contact> userContacts;                                      // вектор контактов конкретного пользователя
+    int userNumber;                                                         // РЅРѕРјРµСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+    SOCKET userSocket;                                                      // СЃРѕРєРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+    std::vector<Contact> userContacts;                                      // РІРµРєС‚РѕСЂ РєРѕРЅС‚Р°РєС‚РѕРІ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
 public:
     User(SOCKET newSocket, int newNumber) 
@@ -17,11 +17,11 @@ public:
     {}
     ~User() = default;
 
-    int getNumber() const;                                                  // геттер номера пользователя
-    SOCKET getSocket() const;                                               // геттер сокета пользователя
-    void addContact(int number, std::string message);                       // добавление контакта
-    void addMessage(int senderNumber, std::string senderMessage);           // добавление сообщения
-    std::string getMessage(int numberContact, int numberMessage) const;     // геттер сообщения по номеру от конкретного контакта
+    int getNumber() const;                                                  // РіРµС‚С‚РµСЂ РЅРѕРјРµСЂР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+    SOCKET getSocket() const;                                               // РіРµС‚С‚РµСЂ СЃРѕРєРµС‚Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+    void addContact(int number, std::string message);                       // РґРѕР±Р°РІР»РµРЅРёРµ РєРѕРЅС‚Р°РєС‚Р°
+    void addMessage(int senderNumber, std::string senderMessage);           // РґРѕР±Р°РІР»РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ
+    std::string getMessage(int numberContact, int numberMessage) const;     // РіРµС‚С‚РµСЂ СЃРѕРѕР±С‰РµРЅРёСЏ РїРѕ РЅРѕРјРµСЂСѓ РѕС‚ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ РєРѕРЅС‚Р°РєС‚Р°
 };
 
 int User::getNumber() const
@@ -42,7 +42,7 @@ void User::addContact(int number, std::string message)
 
 void User::addMessage(int senderNumber, std::string senderMessage) 
 {
-    // добавление сообщения при наличии контакта с введенным номером
+    // РґРѕР±Р°РІР»РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ РїСЂРё РЅР°Р»РёС‡РёРё РєРѕРЅС‚Р°РєС‚Р° СЃ РІРІРµРґРµРЅРЅС‹Рј РЅРѕРјРµСЂРѕРј
     for (Contact contact : userContacts)
     {
         if (contact.getNumber() == senderNumber)
@@ -51,7 +51,7 @@ void User::addMessage(int senderNumber, std::string senderMessage)
             return;
         }
     }
-    // добавление сообщения при отсутствии контакта с введенным номером
+    // РґРѕР±Р°РІР»РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ РїСЂРё РѕС‚СЃСѓС‚СЃС‚РІРёРё РєРѕРЅС‚Р°РєС‚Р° СЃ РІРІРµРґРµРЅРЅС‹Рј РЅРѕРјРµСЂРѕРј
     addContact(senderNumber, senderMessage);
 }
 
@@ -64,5 +64,5 @@ std::string User::getMessage(int numberContact, int numberMessage) const
             return contact.getMessage(numberMessage);
         }
     }
-    return "Отсутствует клиент с введенным номером\n";
+    return "РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РєР»РёРµРЅС‚ СЃ РІРІРµРґРµРЅРЅС‹Рј РЅРѕРјРµСЂРѕРј\n";
 }
