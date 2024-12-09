@@ -1,6 +1,6 @@
 #pragma once
 
-#define _WINSOCK_DEPRECATED_NO_WARNINGS     // макрос для отключения устаревших предупреждений API
+#define _WINSOCK_DEPRECATED_NO_WARNINGS     
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -10,40 +10,40 @@
 #include "User.h"
 #include "Contact.h"
 
-#pragma comment(lib, "WS2_32.lib")          // стандартная библиотека импорта
+#pragma comment(lib, "WS2_32.lib")          
 
 class Server
 {
-    SOCKET serverSocket;                    // сокет сервера
-    SOCKADDR_IN serverAddr;                 // адрес сокета сервера
-    std::vector<User> usersConnections;     // вектор хранения подключений пользователя (клиентов)
-    int allUsersCounter;                    // счетчик всех клиентов
-    int connectedUsersCounter;              // счетчик подключенных клиентов
-    std::recursive_mutex mtxNewConnect;     // синхронизация критической секции внутри serverReceive
-    std::recursive_mutex mtxDisconnect;     // синхронизация критической секции внутри socketError
-    std::recursive_mutex mtxNewMessage;     // синхронизация критической секции внутри sendCommandProcessing
+    SOCKET serverSocket;                    // СЃРѕРєРµС‚ СЃРµСЂРІРµСЂР°
+    SOCKADDR_IN serverAddr;                 // Р°РґСЂРµСЃ СЃРѕРєРµС‚Р° СЃРµСЂРІРµСЂР°
+    std::vector<User> usersConnections;     // РІРµРєС‚РѕСЂ С…СЂР°РЅРµРЅРёСЏ РїРѕРґРєР»СЋС‡РµРЅРёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (РєР»РёРµРЅС‚РѕРІ)
+    int allUsersCounter;                    // СЃС‡РµС‚С‡РёРє РІСЃРµС… РєР»РёРµРЅС‚РѕРІ
+    int connectedUsersCounter;              // СЃС‡РµС‚С‡РёРє РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… РєР»РёРµРЅС‚РѕРІ
+    std::recursive_mutex mtxNewConnect;     // СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РІ РјРµС‚РѕРґРµ serverReceive
+    std::recursive_mutex mtxDisconnect;     // СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РІ РјРµС‚РѕРґРµ socketError
+    std::recursive_mutex mtxNewMessage;     // СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РІ РјРµС‚РѕРґРµ sendCommandProcessing
 public:
     Server();
     ~Server();
 
-    void createNewClient();                                                         // создание потока нового клиента
-    void serverReceive(SOCKET transmittedSocket);                                   // подключение нового клиента
-    void socketError(User currentUser);                                             // обработка ошибки сокета
-    void exitProcessing(User currentUser);                                          // обработка команды /exit
-    void startProcessing(User currentUser);                                         // обработка команды /start
-    void clientCountProcessing(User currentUser) const;                             // обработка команды /client_count
-    void sendCommandProcessing(User currentUser, std::string sendCommandString);    // обработка команды /send_message
-    void showCommandProcessing(User currentUser, std::string showCommandString);    // обработка команды /show_message 
+    void createNewClient();                                                         // СЃРѕР·РґР°РЅРёРµ РїРѕС‚РѕРєР° РЅРѕРІРѕРіРѕ РєР»РёРµРЅС‚Р°
+    void serverReceive(SOCKET transmittedSocket);                                   // РїРѕРґРєР»СЋС‡РµРЅРёРµ РЅРѕРІРѕРіРѕ РєР»РёРµРЅС‚Р°
+    void socketError(User currentUser);                                             // РѕР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РєРё СЃРѕРєРµС‚Р°
+    void exitProcessing(User currentUser);                                          // РѕР±СЂР°Р±РѕС‚РєР° РєРѕРјР°РЅРґС‹ /exit
+    void startProcessing(User currentUser);                                         // РѕР±СЂР°Р±РѕС‚РєР° РєРѕРјР°РЅРґС‹ /start
+    void clientCountProcessing(User currentUser) const;                             // РѕР±СЂР°Р±РѕС‚РєР° РєРѕРјР°РЅРґС‹ /client_count
+    void sendCommandProcessing(User currentUser, std::string sendCommandString);    // РѕР±СЂР°Р±РѕС‚РєР° РєРѕРјР°РЅРґС‹ /send_message
+    void showCommandProcessing(User currentUser, std::string showCommandString);    // РѕР±СЂР°Р±РѕС‚РєР° РєРѕРјР°РЅРґС‹ /show_message 
 };
 
 Server::Server()
 {
-    WSADATA wsaData; // структура данных, содержащая сведения о реализации сокетов Windows
-    WSAStartup(MAKEWORD(2, 7), &wsaData); // функция WSAStartup инициирует использование winsock DLL процессом
-    serverSocket = socket(AF_INET, SOCK_STREAM, 0); // иннициализация сокета сервера
+    WSADATA wsaData; 
+    WSAStartup(MAKEWORD(2, 7), &wsaData); 
+    serverSocket = socket(AF_INET, SOCK_STREAM, 0); 
     if (serverSocket == INVALID_SOCKET)
     {
-        std::cerr << "Создание сокета завершилось сбоем с ошибкой:" << WSAGetLastError() << std::endl;
+        std::cerr << "РЎРѕР·РґР°РЅРёРµ СЃРѕРєРµС‚Р° Р·Р°РІРµСЂС€РёР»РѕСЃСЊ СЃР±РѕРµРј СЃ РѕС€РёР±РєРѕР№:" << WSAGetLastError() << std::endl;
     }
 
     serverAddr.sin_addr.s_addr = INADDR_ANY;
@@ -52,20 +52,20 @@ Server::Server()
 
     if (bind(serverSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
     {
-        std::cerr << "Функция соединения завершилась сбоем с ошибкой: " << WSAGetLastError() << std::endl;
+        std::cerr << "Р¤СѓРЅРєС†РёСЏ СЃРѕРµРґРёРЅРµРЅРёСЏ Р·Р°РІРµСЂС€РёР»Р°СЃСЊ СЃР±РѕРµРј СЃ РѕС€РёР±РєРѕР№: " << WSAGetLastError() << std::endl;
     }
     if (listen(serverSocket, 0) == SOCKET_ERROR)
     {
-        std::cerr << "Функция прослушивания завершилась сбоем с ошибкой:" << WSAGetLastError() << std::endl;
+        std::cerr << "Р¤СѓРЅРєС†РёСЏ РїСЂРѕСЃР»СѓС€РёРІР°РЅРёСЏ Р·Р°РІРµСЂС€РёР»Р°СЃСЊ СЃР±РѕРµРј СЃ РѕС€РёР±РєРѕР№:" << WSAGetLastError() << std::endl;
     }
-    std::cout << "Прослушиваются входящие подключения...." << std::endl;
+    std::cout << "РџСЂРѕСЃР»СѓС€РёРІР°СЋС‚СЃСЏ РІС…РѕРґСЏС‰РёРµ РїРѕРґРєР»СЋС‡РµРЅРёСЏ...." << std::endl;
     createNewClient();
 }
 
 Server::~Server()
 {
     closesocket(serverSocket);
-    WSACleanup(); // Освобождаем ресурсы WinSock
+    WSACleanup();
 };
 
 void Server::createNewClient()
@@ -75,7 +75,7 @@ void Server::createNewClient()
         SOCKET connectingUserSocket = accept(serverSocket, (SOCKADDR*)&serverAddr, 0);
         if (connectingUserSocket == 0)
         {
-            std::cerr << "Ошибка приема нового соединения с сокетом" << std::endl;
+            std::cerr << "РћС€РёР±РєР° РїСЂРёРµРјР° РЅРѕРІРѕРіРѕ СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ СЃРѕРєРµС‚РѕРј" << std::endl;
         }
         else
         {
@@ -93,14 +93,14 @@ void Server::serverReceive(SOCKET transmittedSocket)
         User currentUser(transmittedSocket, allUsersCounter);
         usersConnections.push_back(currentUser);
         connectedUsersCounter++;
-        std::cout << "Клиент " << currentUser.getNumber() << " подключен!" << std::endl;
+        std::cout << "РљР»РёРµРЅС‚ " << currentUser.getNumber() << " РїРѕРґРєР»СЋС‡РµРЅ!" << std::endl;
     mtxNewConnect.unlock();
 
     char buffer[1024] = { 0 };
     std::string sendCommandString;
     std::string showCommandString;
 
-    while (true) // цикл работы сервера
+    while (true) // С†РёРєР» СЂР°Р±РѕС‚С‹ СЃРµСЂРІРµСЂР°
     {
         if (recv(currentUser.getSocket(), buffer, sizeof(buffer), 0) == SOCKET_ERROR)
         {
@@ -133,95 +133,17 @@ void Server::serverReceive(SOCKET transmittedSocket)
         }
         else
         {
-            std::cout << "Клиент " << currentUser.getNumber() << ": " << buffer;
+            std::cout << "РљР»РёРµРЅС‚ " << currentUser.getNumber() << ": " << buffer;
         }
         memset(buffer, 0, sizeof(buffer));
     }
 }
 
-// сделать получение с универсальным буфером как в клиенте
-
-/*
-void Server::serverReceive(SOCKET transmittedSocket)
-{
-    mtxNewConnect.lock();
-    allUsersCounter++;
-    User currentUser(transmittedSocket, allUsersCounter);
-    usersConnections.push_back(currentUser);
-    connectedUsersCounter++;
-    std::cout << "Клиент " << currentUser.getNumber() << " подключен!" << std::endl;
-    mtxNewConnect.unlock();
-
-    char buffer[1024];
-    int recvRead = recv(transmittedSocket, buffer, sizeof(buffer), MSG_PEEK);
-    int recvCount = 0;
-    std::string sendCommandString;
-    std::string showCommandString;
-    std::string strBuffer;
-
-    while (true) // цикл работы сервера
-    {
-        if (recvRead <= 0)
-        {
-            socketError(currentUser);
-            return;
-        }
-        else
-        {
-            while ((recvCount = recv(transmittedSocket, buffer, sizeof(buffer), 0)) > 0) {
-                if (recvCount >= sizeof(buffer))
-                {
-                    strBuffer.append(buffer, recvCount);
-                } 
-                else 
-                if (strBuffer == "/exit\n")
-                {
-                    exitProcessing(currentUser);
-                    return;
-                }
-                else if (strBuffer == "/start\n")
-                {
-                    startProcessing(currentUser);
-                }
-                else if (strBuffer == "/client_count\n")
-                {
-                    clientCountProcessing(currentUser);
-                }
-                else if (sendCommandString.append(strBuffer).find("/send_message_") == 0)
-                {
-                    sendCommandProcessing(currentUser, sendCommandString);
-                    sendCommandString.clear();
-                }
-                else if (showCommandString.append(strBuffer).find("/show_message_") == 0
-                    && showCommandString.find("_from_client_") < sizeof(strBuffer))
-                {
-                    showCommandProcessing(currentUser, showCommandString);
-                    showCommandString.clear();
-                }
-                else
-                {
-                    std::cout << "Клиент " << currentUser.getNumber() << ": " << strBuffer;
-                }
-                strBuffer.clear();
-                memset(buffer, 0, sizeof(buffer));
-
-
-
-
-            }
-            
-            
-                
-        }
-    }
-}
-*/
-
 void Server::socketError(User currentUser)
 {
     std::lock_guard<std::recursive_mutex> lock(mtxDisconnect);
 
-    std::cerr << "Соединение с клиентом " << currentUser.getNumber() << " завершилось сбоем с ошибкой : "
+    std::cerr << "РЎРѕРµРґРёРЅРµРЅРёРµ СЃ РєР»РёРµРЅС‚РѕРј " << currentUser.getNumber() << " Р·Р°РІРµСЂС€РёР»РѕСЃСЊ СЃР±РѕРµРј СЃ РѕС€РёР±РєРѕР№ : "
         << WSAGetLastError() << std::endl;
 
     for (int i = 0; i < usersConnections.size(); i++)
@@ -236,22 +158,22 @@ void Server::socketError(User currentUser)
 
 void Server::exitProcessing(User currentUser)
 {
-    std::cout << "Клиент " << currentUser.getNumber() << " отсоединился." << std::endl;
+    std::cout << "РљР»РёРµРЅС‚ " << currentUser.getNumber() << " РѕС‚СЃРѕРµРґРёРЅРёР»СЃСЏ." << std::endl;
     connectedUsersCounter--;
-    std::string localMessage = { "Произошло отключение от сервера\n" };
+    std::string localMessage = { "РџСЂРѕРёР·РѕС€Р»Рѕ РѕС‚РєР»СЋС‡РµРЅРёРµ РѕС‚ СЃРµСЂРІРµСЂР°\n" };
     send(currentUser.getSocket(), localMessage.c_str(), (int) localMessage.length(), 0);
 }
 
 void Server::startProcessing(User currentUser)
 {
-    std::string localMessage = { "Привет. Ваш порядковый номер - " + std::to_string(currentUser.getNumber()) + "\n"};
+    std::string localMessage = { "РџСЂРёРІРµС‚. Р’Р°С€ РїРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ - " + std::to_string(currentUser.getNumber()) + "\n"};
     send(currentUser.getSocket(), localMessage.c_str(), (int)localMessage.length(), 0);
     std::cout << localMessage;
 }
 
 void Server::clientCountProcessing(User currentUser) const
 {
-    std::string localMessage = { "Количество клиентов, подключенных сейчас - " 
+    std::string localMessage = { "РљРѕР»РёС‡РµСЃС‚РІРѕ РєР»РёРµРЅС‚РѕРІ, РїРѕРґРєР»СЋС‡РµРЅРЅС‹С… СЃРµР№С‡Р°СЃ - " 
         + std::to_string(connectedUsersCounter) + "\n" };
     send(currentUser.getSocket(), localMessage.c_str(), (int) localMessage.length(), 0);
     std::cout << localMessage;
@@ -267,10 +189,10 @@ void Server::sendCommandProcessing(User currentUser, std::string sendCommandStri
     int endCommandIndex = (int) sendCommandString.find(":");
 
     std::string localMessageShort = sendCommandString.substr(endCommandIndex + 1, sendCommandString.length());
-    std::string localMessageLong = "Текст нового сообщения от клиента " + std::to_string(senderNumber) + ": "
+    std::string localMessageLong = "РўРµРєСЃС‚ РЅРѕРІРѕРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ РѕС‚ РєР»РёРµРЅС‚Р° " + std::to_string(senderNumber) + ": "
         + localMessageShort + "\n";
 
-    std::cout << "Текст сообщения для клиента " << recipientNumber << ": " << localMessageShort;
+    std::cout << "РўРµРєСЃС‚ СЃРѕРѕР±С‰РµРЅРёСЏ РґР»СЏ РєР»РёРµРЅС‚Р° " << recipientNumber << ": " << localMessageShort;
     
     for (int i = 0; i < usersConnections.size(); i++)
     {
@@ -281,13 +203,13 @@ void Server::sendCommandProcessing(User currentUser, std::string sendCommandStri
             if (send(usersConnections[recipientNumber - 1].getSocket(), localMessageLong.c_str(),
                 (int)localMessageLong.length() - 1, 0) == SOCKET_ERROR)
             {
-                std::string errorMessage = "Cообщение отправлено с ошибкой\n";
+                std::string errorMessage = "CРѕРѕР±С‰РµРЅРёРµ РѕС‚РїСЂР°РІР»РµРЅРѕ СЃ РѕС€РёР±РєРѕР№\n";
                 send(currentUser.getSocket(), errorMessage.c_str(), (int)errorMessage.length(), 0);
                 std::cout << errorMessage;
             }
             else
             {
-                std::string successfulMessage = "Cообщение отправлено успешно\n";
+                std::string successfulMessage = "CРѕРѕР±С‰РµРЅРёРµ РѕС‚РїСЂР°РІР»РµРЅРѕ СѓСЃРїРµС€РЅРѕ\n";
                 send(currentUser.getSocket(), successfulMessage.c_str(), (int)successfulMessage.length(), 0);
                 std::cout << successfulMessage;
             }
@@ -295,7 +217,7 @@ void Server::sendCommandProcessing(User currentUser, std::string sendCommandStri
         }
         else
         {
-            std::string errorUser = "Отсутствует получатель с указанным номером\n";
+            std::string errorUser = "РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РїРѕР»СѓС‡Р°С‚РµР»СЊ СЃ СѓРєР°Р·Р°РЅРЅС‹Рј РЅРѕРјРµСЂРѕРј\n";
             send(currentUser.getSocket(), errorUser.c_str(), (int)errorUser.length(), 0);
             std::cout << errorUser;
             return;
