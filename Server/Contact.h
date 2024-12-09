@@ -7,8 +7,8 @@
 class Contact
 {
 private:
-    int contactNumber;                                  // номер контакта
-    std::vector<std::string> contactMessages;           // вектор сообщений для конкретного контакта  
+    int contactNumber;                                  // РЅРѕРјРµСЂ РєРѕРЅС‚Р°РєС‚Р°
+    std::vector<std::string> contactMessages;           // РІРµРєС‚РѕСЂ СЃРѕРѕР±С‰РµРЅРёР№ РґР»СЏ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ РєРѕРЅС‚Р°РєС‚Р°  
 
 public:
     Contact(int senderNumber, std::string& senderMessage)
@@ -18,10 +18,10 @@ public:
     }
     ~Contact() = default;
 
-    void setNumber(int senderNumber);                   // сеттер номера контакта-отправителя
-    int getNumber() const;                              // геттер номера контакта-отправителя    
-    void addMessage(std::string& senderMessage);        // добавление нового сообщения в вектор
-    std::string getMessage(int index);                  // геттер сообщения по номеру
+    void setNumber(int senderNumber);                   // СЃРµС‚С‚РµСЂ РЅРѕРјРµСЂР° РєРѕРЅС‚Р°РєС‚Р°-РѕС‚РїСЂР°РІРёС‚РµР»СЏ
+    int getNumber() const;                              // РіРµС‚С‚РµСЂ РЅРѕРјРµСЂР° РєРѕРЅС‚Р°РєС‚Р°-РѕС‚РїСЂР°РІРёС‚РµР»СЏ    
+    void addMessage(std::string& senderMessage);        // РґРѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ РІ РІРµРєС‚РѕСЂ
+    std::string getMessage(int index);                  // РіРµС‚С‚РµСЂ СЃРѕРѕР±С‰РµРЅРёСЏ РїРѕ РЅРѕРјРµСЂСѓ
 };
 
 void Contact::setNumber(int senderNumber)
@@ -43,11 +43,11 @@ std::string Contact::getMessage(int index)
 {
     if (index > 0 && index <= contactMessages.size()) 
     {
-        return "Текст сообщения " + std::to_string(index) + " от клиента " + std::to_string(contactNumber) + ": "
+        return "РўРµРєСЃС‚ СЃРѕРѕР±С‰РµРЅРёСЏ " + std::to_string(index) + " РѕС‚ РєР»РёРµРЅС‚Р° " + std::to_string(contactNumber) + ": "
             + contactMessages[index - 1];
     }
     else 
     {
-        return "Отсутствует сообщение с введенным номером от данного клиента\n";
+        return "РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ СЃРѕРѕР±С‰РµРЅРёРµ СЃ РІРІРµРґРµРЅРЅС‹Рј РЅРѕРјРµСЂРѕРј РѕС‚ РґР°РЅРЅРѕРіРѕ РєР»РёРµРЅС‚Р°\n";
     }
 }
