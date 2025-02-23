@@ -39,14 +39,14 @@ void Contact::addMessage(std::string& senderMessage)
     contactMessages.push_back(senderMessage);
 }
 
-std::string Contact::getMessage(int index) 
+std::string Contact::getMessage(int index)
 {
-    if (index > 0 && index <= contactMessages.size()) 
+    if (index > 0 && index <= contactMessages.size())
     {
         return "Текст сообщения " + std::to_string(index) + " от клиента " + std::to_string(contactNumber) + ": "
             + contactMessages[index - 1];
     }
-    else 
+    else
     {
         return "Отсутствует сообщение с введенным номером от данного клиента\n";
     }
