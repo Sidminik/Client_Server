@@ -12,9 +12,10 @@ private:
     std::vector<Contact> userContacts;                                      // вектор контактов конкретного пользователя
 
 public:
-    User(SOCKET newSocket, int newNumber) 
+    User(SOCKET newSocket, int newNumber)
         : userSocket(newSocket), userNumber(newNumber)
-    {}
+    {
+    }
     ~User() = default;
 
     int getNumber() const;                                                  // геттер номера пользователя
@@ -34,13 +35,13 @@ SOCKET User::getSocket() const
     return userSocket;
 }
 
-void User::addContact(int number, std::string message) 
+void User::addContact(int number, std::string message)
 {
     Contact newContact(number, message);
     userContacts.push_back(newContact);
 }
 
-void User::addMessage(int senderNumber, std::string senderMessage) 
+void User::addMessage(int senderNumber, std::string senderMessage)
 {
     // добавление сообщения при наличии контакта с введенным номером
     for (Contact contact : userContacts)
