@@ -24,7 +24,8 @@ int main(int argc, char* argv[])
     sendThread.join();
     receiveThread.join();
 
-    std::cout << "Êëèåíò îòêëþ÷èëñÿ îò ñåðâåðà (îáà ïîòîêà çàâåðøåíû)" << std::endl;
+    std::cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚ Ð¾Ñ‚ÐºÐ»ÑŽÑ‡Ð¸Ð»ÑÑ Ð¾Ñ‚ ÑÐµÑ€Ð²ÐµÑ€Ð° (Ð¾Ð±Ð° Ð¿Ð¾Ñ‚Ð¾ÐºÐ° Ð·Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ñ‹)" << std::endl;
 
     return 0;
 }
+
