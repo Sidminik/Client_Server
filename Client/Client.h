@@ -16,9 +16,9 @@ public:
     Client(const char* inetAddress);
     ~Client();
 
-    void clientReceive();               // получение сообщений
-    void clientSend();                  // отправление сообщений
-    void cleanup();                     // очистка ресурсов
+    void clientReceive();               // РїРѕР»СѓС‡РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёР№
+    void clientSend();                  // РѕС‚РїСЂР°РІР»РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёР№
+    void cleanup();                     // РѕС‡РёСЃС‚РєР° СЂРµСЃСѓСЂСЃРѕРІ
 };
 
 Client::Client(const char* inetAddress)
@@ -29,7 +29,7 @@ Client::Client(const char* inetAddress)
     server = socket(AF_INET, SOCK_STREAM, 0);
     if (server == INVALID_SOCKET)
     {
-        std::cerr << "Сбой создания сокета завершился с ошибкой: " << WSAGetLastError() << std::endl;
+        std::cerr << "РЎР±РѕР№ СЃРѕР·РґР°РЅРёСЏ СЃРѕРєРµС‚Р° Р·Р°РІРµСЂС€РёР»СЃСЏ СЃ РѕС€РёР±РєРѕР№: " << WSAGetLastError() << std::endl;
         exit(EXIT_FAILURE);
     }
 
@@ -40,22 +40,22 @@ Client::Client(const char* inetAddress)
 
     if (connect(server, (SOCKADDR*)&addr, sizeof(addr)) == SOCKET_ERROR)
     {
-        std::cerr << "Соединение с сервером завершилось с ошибкой: " << WSAGetLastError() << std::endl;
+        std::cerr << "РЎРѕРµРґРёРЅРµРЅРёРµ СЃ СЃРµСЂРІРµСЂРѕРј Р·Р°РІРµСЂС€РёР»РѕСЃСЊ СЃ РѕС€РёР±РєРѕР№: " << WSAGetLastError() << std::endl;
         cleanup();
         exit(EXIT_FAILURE);
     }
     else
     {
         connectionFlag = true;
-        std::cout << "Установлено соединение с сервером!" << std::endl;
-        std::cout << "Для разрыва соединения введите \"/exit\"" << std::endl;
+        std::cout << "РЈСЃС‚Р°РЅРѕРІР»РµРЅРѕ СЃРѕРµРґРёРЅРµРЅРёРµ СЃ СЃРµСЂРІРµСЂРѕРј!" << std::endl;
+        std::cout << "Р”Р»СЏ СЂР°Р·СЂС‹РІР° СЃРѕРµРґРёРЅРµРЅРёСЏ РІРІРµРґРёС‚Рµ \"/exit\"" << std::endl;
     }
 };
 
 Client::~Client()
 {
     cleanup();
-    std::cout << "Деструктор" << std::endl;
+    std::cout << "Р”РµСЃС‚СЂСѓРєС‚РѕСЂ" << std::endl;
 }
 
 void Client::clientReceive()
@@ -70,22 +70,22 @@ void Client::clientReceive()
             int errorCode = WSAGetLastError();
             if (errorCode == 10053)
             {
-                std::cout << "Соединение было закрыто клиентом" << std::endl;
+                std::cout << "РЎРѕРµРґРёРЅРµРЅРёРµ Р±С‹Р»Рѕ Р·Р°РєСЂС‹С‚Рѕ РєР»РёРµРЅС‚РѕРј" << std::endl;
             }
             else if (errorCode == 10054)
             {
-                std::cout << "Удаленным хостом было принудительно закрыто существующее соединение" << std::endl;
+                std::cout << "РЈРґР°Р»РµРЅРЅС‹Рј С…РѕСЃС‚РѕРј Р±С‹Р»Рѕ РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ Р·Р°РєСЂС‹С‚Рѕ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРµ СЃРѕРµРґРёРЅРµРЅРёРµ" << std::endl;
             }
             else
             {
-                std::cout << "Ошибка получения данных: " << errorCode << std::endl;
+                std::cout << "РћС€РёР±РєР° РїРѕР»СѓС‡РµРЅРёСЏ РґР°РЅРЅС‹С…: " << errorCode << std::endl;
             }
             cleanup();
             return;
         }
         else if (recvRead == 0)
         {
-            std::cout << "Соединение было закрыто сервером" << std::endl;
+            std::cout << "РЎРѕРµРґРёРЅРµРЅРёРµ Р±С‹Р»Рѕ Р·Р°РєСЂС‹С‚Рѕ СЃРµСЂРІРµСЂРѕРј" << std::endl;
             cleanup();
             return;
         }
@@ -107,18 +107,18 @@ void Client::clientSend()
 
         if (send(server, stringBuffer.c_str(), (int)stringBuffer.length(), 0) == SOCKET_ERROR)
         {
-            std::cerr << "Ошибка отправки данных: " << WSAGetLastError() << std::endl;
+            std::cerr << "РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С…: " << WSAGetLastError() << std::endl;
             return;
         }
 
         if (stringBuffer == "/exit\n")
         {
-            Sleep(3000);                // ожидание сигнала со стороны сервера на завершение clientReceive (3 секунды)
+            Sleep(3000);                // РѕР¶РёРґР°РЅРёРµ СЃРёРіРЅР°Р»Р° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР° РЅР° Р·Р°РІРµСЂС€РµРЅРёРµ clientReceive (3 СЃРµРєСѓРЅРґС‹)
             if (connectionFlag)
             {
-                cleanup();              // принудительное освобождение ресурсов при отсутсвии ответа от сервера
+                cleanup();              // РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕРµ РѕСЃРІРѕР±РѕР¶РґРµРЅРёРµ СЂРµСЃСѓСЂСЃРѕРІ РїСЂРё РѕС‚СЃСѓС‚СЃРІРёРё РѕС‚РІРµС‚Р° РѕС‚ СЃРµСЂРІРµСЂР°
             }
-            std::cout << "Поток отправки отключился от сервера" << std::endl;
+            std::cout << "РџРѕС‚РѕРє РѕС‚РїСЂР°РІРєРё РѕС‚РєР»СЋС‡РёР»СЃСЏ РѕС‚ СЃРµСЂРІРµСЂР°" << std::endl;
             return;
         }
     }
@@ -131,4 +131,3 @@ void Client::cleanup() {
     }
     WSACleanup();
 }
-
